@@ -46,8 +46,37 @@ CREATE TABLE [dbo].[Bilgilendirmeler](
 GO
 
 SET ANSI_PADDING OFF
+
 GO
 
+/****** Object:  StoredProcedure [dbo].[sp_BilgilendirmeEkle]    Script Date: 21.7.2015 10:53:25 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_BilgilendirmeEkle] 
+	@p_BilgilendirmeTipi varchar(50),
+	@p_Baslik varchar(50),
+	@p_Icerik nvarchar(500),
+	@p_Tarih datetime  
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+
+    TRUNCATE TABLE [dbo].[Bilgilendirmeler]
+    INSERT INTO [dbo].[Bilgilendirmeler]([BilgilendirmeTipi],[Baslik],[Icerik]) VALUES(@p_BilgilendirmeTipi,@p_Baslik,@p_Icerik)
+    INSERT INTO [dbo].[BilgilendirmelerArsiv]([BilgilendirmeTipi],[Baslik],[Icerik],[Tarih]) VALUES(@p_BilgilendirmeTipi,@p_Baslik,@p_Icerik,@p_Tarih)
+END
+
+GO
 /*
  * Creating the users in this database
  *
